@@ -1,7 +1,25 @@
 {
-  "name": "lobster-tavern-v3",
+  "name": "lobster-tavern-landing-page",
   "private": true,
-  "scripts": { "dev": "next dev", "build": "next build", "start": "next start" },
-  "dependencies": { "next": "15.0.0", "react": "18.3.1", "react-dom": "18.3.1", "framer-motion": "^11.11.8", "gsap": "^3.12.5" },
-  "devDependencies": { "tailwindcss": "^3.4.13", "postcss": "^8.4.49", "autoprefixer": "^10.4.20", "typescript": "^5.6.3" }
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "15.3.2",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "framer-motion": "^11.11.8",
+    "gsap": "^3.12.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.13",
+    "typescript": "^5.6.3"
+  }
 }
