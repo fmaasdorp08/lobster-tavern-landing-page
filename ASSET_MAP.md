@@ -1,0 +1,12 @@
+# Asset Map
+- logo-horizontal.png -> Lobster-Tavern-Logo-Original-with-Transparent-Background-5000x5000.jpg
+- hero-lobster.jpg -> IMG-20240512-WA0041.jpg
+- experience-1.jpg -> IMG-20240512-WA0024.jpg
+- experience-2.jpg -> IMG-20240512-WA0043.jpg
+- gallery-1.jpg -> Ultimate-Deck-Serves-4-to-5.jpg
+- gallery-2.jpg -> DeckMeUp-Serves-1-to-2.jpg
+- gallery-3.jpg -> IMG-20240512-WA0023.jpg
+- gallery-4.jpg -> IMG-20240512-WA0026.jpg
+- gallery-5.jpg -> IMG-20240512-WA0044.jpg
+- gallery-6.jpg -> IMG-20240512-WA0047.jpg
+- menu.pdf -> Lobster-Tavern-Menu-19-June-2024-PDF.pdf
