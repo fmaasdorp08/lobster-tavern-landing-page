@@ -46,126 +46,12 @@ const cards = [
   },
 ];
 
-function WebGLParticles() {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const gl = canvas.getContext('webgl', { alpha: true, antialias: true });
-    if (!gl) return;
-
-    const vertexSource = `
-      attribute vec2 a_position;
-      uniform float u_time;
-      void main() {
-        vec2 p = a_position;
-        float drift = sin(u_time * 0.7 + p.x * 6.0) * 0.025;
-        gl_Position = vec4(p.x + drift, p.y + cos(u_time * 0.45 + p.y * 5.0) * 0.025, 0.0, 1.0);
-        gl_PointSize = 2.4 + 3.8 * (sin(u_time + p.x * 8.0) * 0.5 + 0.5);
-      }
-    `;
-
-    const fragmentSource = `
-      precision mediump float;
-      void main() {
-        vec2 c = gl_PointCoord - 0.5;
-        float d = length(c);
-        float alpha = smoothstep(0.5, 0.0, d);
-        gl_FragColor = vec4(0.02, 0.02, 0.02, alpha * 0.58);
-      }
-    `;
-
-    const compile = (type: number, source: string) => {
-      const shader = gl.createShader(type);
-      if (!shader) return null;
-      gl.shaderSource(shader, source);
-      gl.compileShader(shader);
-      return shader;
-    };
-
-    const vertex = compile(gl.VERTEX_SHADER, vertexSource);
-    const fragment = compile(gl.FRAGMENT_SHADER, fragmentSource);
-    if (!vertex || !fragment) return;
-
-    const program = gl.createProgram();
-    if (!program) return;
-    gl.attachShader(program, vertex);
-    gl.attachShader(program, fragment);
-    gl.linkProgram(program);
-    gl.useProgram(program);
-
-    const particleCount = 220;
-    const positions = new Float32Array(particleCount * 2);
-    for (let i = 0; i < particleCount; i += 1) {
-      positions[i * 2] = Math.random() * 2 - 1;
-      positions[i * 2 + 1] = Math.random() * 2 - 1;
-    }
-
-    const buffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-    gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
-
-    const positionLocation = gl.getAttribLocation(program, 'a_position');
-    gl.enableVertexAttribArray(positionLocation);
-    gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
-
-    const timeLocation = gl.getUniformLocation(program, 'u_time');
-
-    const resize = () => {
-      const ratio = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.floor(window.innerWidth * ratio);
-      canvas.height = Math.floor(window.innerHeight * ratio);
-      canvas.style.width = `${window.innerWidth}px`;
-      canvas.style.height = `${window.innerHeight}px`;
-      gl.viewport(0, 0, canvas.width, canvas.height);
-    };
-
-    let raf = 0;
-    const start = performance.now();
-    const render = () => {
-      const time = (performance.now() - start) / 1000;
-      gl.clearColor(0, 0, 0, 0);
-      gl.clear(gl.COLOR_BUFFER_BIT);
-      gl.uniform1f(timeLocation, time);
-      gl.drawArrays(gl.POINTS, 0, particleCount);
-      raf = requestAnimationFrame(render);
-    };
-
-    resize();
-    render();
-    window.addEventListener('resize', resize);
-
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener('resize', resize);
-    };
-  }, []);
-
-  return <canvas ref={canvasRef} className="pointer-events-none fixed inset-0 z-[3] opacity-100" aria-hidden="true" />;
-}
-
 export default function LobsterExperience() {
-  const cursorRef = useRef<HTMLDivElement | null>(null);
   const rootRef = useRef<HTMLElement | null>(null);
+  const rippleLayerRef = useRef<HTMLDivElement | null>(null);
+  const lastRippleRef = useRef(0);
 
   useEffect(() => {
-    const cursor = cursorRef.current;
-    const root = rootRef.current;
-    if (!cursor || !root) return;
-
-    const moveCursor = (event: MouseEvent) => {
-      gsap.to(cursor, {
-        x: event.clientX - 220,
-        y: event.clientY - 220,
-        duration: 0.45,
-        ease: 'power3.out',
-      });
-    };
-
-    window.addEventListener('mousemove', moveCursor);
-
     const reveals = gsap.utils.toArray<HTMLElement>('.reveal');
     reveals.forEach((el) => {
       gsap.fromTo(
@@ -180,19 +66,6 @@ export default function LobsterExperience() {
         }
       );
     });
-
-    const onScroll = () => {
-      const scrollY = window.scrollY;
-      root.style.setProperty('--scroll-depth', `${scrollY * 0.08}px`);
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-
-    return () => {
-      window.removeEventListener('mousemove', moveCursor);
-      window.removeEventListener('scroll', onScroll);
-    };
   }, []);
 
   const updateGlow = (event: ReactMouseEvent<HTMLAnchorElement>) => {
@@ -202,11 +75,26 @@ export default function LobsterExperience() {
     target.style.setProperty('--y', `${event.clientY - rect.top}px`);
   };
 
+  const createHeroRipple = (event: ReactMouseEvent<HTMLElement>) => {
+    const now = performance.now();
+    if (now - lastRippleRef.current < 120) return;
+    lastRippleRef.current = now;
+
+    const layer = rippleLayerRef.current;
+    if (!layer) return;
+
+    const rect = event.currentTarget.getBoundingClientRect();
+    const ripple = document.createElement('span');
+    ripple.className = 'cursor-ripple';
+    ripple.style.left = `${event.clientX - rect.left}px`;
+    ripple.style.top = `${event.clientY - rect.top}px`;
+
+    layer.appendChild(ripple);
+    window.setTimeout(() => ripple.remove(), 1200);
+  };
+
   return (
     <main ref={rootRef} className="relative overflow-hidden bg-[#050505] text-white">
-      <WebGLParticles />
-      <div ref={cursorRef} className="cursor-light pointer-events-none fixed left-0 top-0 z-[4] hidden h-[440px] w-[440px] rounded-full lg:block" />
-
       <nav className="glass-nav fixed left-1/2 top-5 z-50 flex w-[calc(100%-2rem)] max-w-6xl -translate-x-1/2 items-center justify-between rounded-full px-5 py-3">
         <a href={officialWebsiteUrl} className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.35em] text-gold transition hover:opacity-60" aria-label="Visit the official Lobster Tavern website">
           <img src={images.logo} alt="Lobster Tavern logo" className="h-8 w-auto object-contain" />
@@ -218,15 +106,10 @@ export default function LobsterExperience() {
         </div>
       </nav>
 
-      <section className="motion-stage relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-24">
+      <section onMouseMove={createHeroRipple} className="motion-stage relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-24">
         <img src={images.hero} alt="Lobster Tavern hero seafood dining" className="absolute inset-0 h-full w-full object-cover opacity-12" />
         <div className="absolute inset-0 bg-white/35" />
-        <div className="luxury-aurora parallax-slow opacity-100" />
-        <div className="luxury-grid opacity-80" />
-        <div className="depth-orb one" />
-        <div className="depth-orb two" />
-        <div className="depth-orb three" />
-        <div className="shimmer-sweep opacity-70" />
+        <div ref={rippleLayerRef} className="ripple-layer" aria-hidden="true" />
 
         <div className="relative z-10 mx-auto max-w-6xl text-center">
           <p className="reveal mb-6 text-sm font-semibold uppercase tracking-[0.55em] text-gold">Lobster Tavern Johannesburg</p>
