@@ -2,7 +2,7 @@ const whatsappNumber = '27768100585';
 const whatsappMessage = encodeURIComponent('Hi Lobster Tavern, I would like to make a booking or place an order.');
 
 const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
-const uberEatsUrl = 'https://www.ubereats.com/';
+const uberEatsUrl = 'https://www.ubereats.com/store-browse-uuid/c279b576-d85b-5ae9-8525-6032c833b861?diningMode=DELIVERY';
 
 const marqueeItems = [
   'Flame Grilled Lobster',
