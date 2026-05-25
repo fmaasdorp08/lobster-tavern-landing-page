@@ -216,10 +216,10 @@ export default function LobsterExperience() {
           <p className="reveal mb-6 text-sm font-semibold uppercase tracking-[0.55em] text-gold">Lobster Tavern Johannesburg</p>
           <h1 className="reveal font-display text-6xl leading-[0.9] tracking-tight sm:text-7xl lg:text-8xl">
             Luxury Seafood.
-            <span className="block text-gold">Designed For Nights Out.</span>
+            <span className="block text-gold">Designed For Nights In.</span>
           </h1>
           <p className="reveal mx-auto mt-8 max-w-3xl text-lg leading-8 text-smoke sm:text-xl">
-            Flame grilled lobster, premium seafood platters, cocktails, atmosphere, and indulgent dining experiences crafted for unforgettable evenings.
+            Seafood boil bags, premium crab dishes, indulgent seafood platters with all that the ocean has to offer, premium seafood platters, enjoy that premium dining experience,crafted for unforgettable evenings.
           </p>
           <div className="reveal mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a href={whatsappUrl} onMouseMove={updateGlow} className="glow-cta rounded-full bg-gold px-8 py-4 text-sm font-black uppercase tracking-[0.25em] text-black">
