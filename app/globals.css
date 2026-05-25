@@ -21,6 +21,49 @@ body {
   font-family: 'Cormorant Garamond', serif;
 }
 
+.ripple-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  overflow: clip;
+  background: #07141a;
+}
+
+.ripple-hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center center;
+  transform: scale(1.03);
+  will-change: transform;
+}
+
+.ripple-hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(to bottom, rgba(4, 10, 14, 0.2), rgba(4, 10, 14, 0.58)),
+    radial-gradient(circle at 50% 35%, rgba(16, 70, 86, 0.10), transparent 44%),
+    linear-gradient(to top, rgba(2, 7, 10, 0.72), rgba(2, 7, 10, 0.24));
+  pointer-events: none;
+}
+
+.ripple-hero__content {
+  position: relative;
+  z-index: 2;
+  width: min(1120px, calc(100% - 2rem));
+  margin-inline: auto;
+  padding: 8rem 0 5rem;
+}
+
+.ripple-hero canvas {
+  opacity: 0.96;
+}
+
 .motion-stage {
   perspective: 1200px;
   transform-style: preserve-3d;
@@ -55,81 +98,6 @@ body {
   animation: underwater-rays 10s ease-in-out infinite;
 }
 
-.luxury-aurora {
-  position: absolute;
-  inset: -20%;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(9, 42, 52, 0.10), transparent 28%),
-    radial-gradient(circle at 80% 30%, rgba(0, 0, 0, 0.07), transparent 25%),
-    radial-gradient(circle at 45% 85%, rgba(40, 82, 96, 0.08), transparent 30%),
-    linear-gradient(135deg, #ffffff 0%, #f2f7f6 45%, #f8f7f3 100%);
-  animation: underwater-drift 18s ease-in-out infinite alternate;
-  transform: translateZ(-120px) scale(1.12);
-}
-
-.luxury-grid {
-  position: absolute;
-  inset: auto -20% -22% -20%;
-  height: 48%;
-  background-image:
-    linear-gradient(rgba(16, 47, 56, 0.11) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(16, 47, 56, 0.09) 1px, transparent 1px);
-  background-size: 72px 72px;
-  transform: rotateX(67deg) translateZ(-40px);
-  transform-origin: center bottom;
-  animation: grid-flow 12s linear infinite;
-  mask-image: linear-gradient(to top, black 5%, transparent 78%);
-  opacity: 0.62;
-}
-
-.depth-orb {
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(54px);
-  opacity: 0.22;
-  mix-blend-mode: multiply;
-  animation: underwater-orb 15s ease-in-out infinite alternate;
-}
-
-.depth-orb.one {
-  left: 8%;
-  top: 15%;
-  width: 18rem;
-  height: 18rem;
-  background: rgba(10, 48, 58, 0.20);
-  transform: translateZ(80px);
-}
-
-.depth-orb.two {
-  right: 8%;
-  bottom: 14%;
-  width: 23rem;
-  height: 23rem;
-  background: rgba(0, 0, 0, 0.12);
-  animation-delay: -4s;
-  transform: translateZ(40px);
-}
-
-.depth-orb.three {
-  left: 45%;
-  top: 55%;
-  width: 14rem;
-  height: 14rem;
-  background: rgba(35, 75, 86, 0.14);
-  animation-delay: -7s;
-  transform: translateZ(120px);
-}
-
-.shimmer-sweep {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(115deg, transparent 0%, transparent 34%, rgba(0, 0, 0, 0.055) 48%, transparent 60%, transparent 100%),
-    linear-gradient(83deg, transparent 0%, rgba(26, 71, 84, 0.045) 44%, transparent 62%);
-  transform: translateX(-120%);
-  animation: shimmer-sweep 11s ease-in-out infinite;
-}
-
 .marquee-track {
   animation: marquee 22s linear infinite;
 }
@@ -141,12 +109,6 @@ body {
 
 .interactive-card:hover {
   transform: translateY(-10px) rotateX(3deg) rotateY(-3deg);
-}
-
-.cursor-light {
-  background: radial-gradient(circle, rgba(12, 50, 62, 0.13), rgba(0, 0, 0, 0.045) 34%, transparent 68%);
-  filter: blur(16px);
-  mix-blend-mode: multiply;
 }
 
 .glass-nav {
@@ -188,18 +150,6 @@ body {
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 20px 60px rgba(0,0,0,0.08);
 }
 
-.cinematic-video-plane {
-  background:
-    radial-gradient(circle at 25% 20%, rgba(0,0,0,0.16), transparent 34%),
-    linear-gradient(120deg, rgba(0,0,0,0.10), rgba(0,0,0,0.025));
-  filter: blur(0.2px);
-}
-
-.parallax-slow {
-  transform: translateY(var(--scroll-depth, 0px));
-}
-
-/* Light monochrome inversion for Tailwind classes already used in the component */
 .bg-\[\#050505\] {
   background-color: #f8f7f3 !important;
 }
@@ -247,21 +197,6 @@ body {
   border-color: rgba(0, 0, 0, 0.38) !important;
 }
 
-@keyframes underwater-drift {
-  0% {
-    transform: translate3d(-2%, -1%, -120px) scale(1.12) rotate(0deg);
-    filter: blur(0px);
-  }
-  50% {
-    transform: translate3d(2%, 1%, -80px) scale(1.18) rotate(1.4deg);
-    filter: blur(1px);
-  }
-  100% {
-    transform: translate3d(-1%, 3%, -100px) scale(1.15) rotate(-1.6deg);
-    filter: blur(0px);
-  }
-}
-
 @keyframes underwater-caustics {
   0% {
     transform: translate3d(-3%, -2%, 0) rotate(-8deg) scale(1.18);
@@ -288,42 +223,28 @@ body {
   }
 }
 
-@keyframes grid-flow {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: 0 72px;
-  }
-}
-
-@keyframes underwater-orb {
-  0% {
-    transform: translate3d(0, 0, 60px) scale(1);
-  }
-  50% {
-    transform: translate3d(18px, -36px, 120px) scale(1.08);
-  }
-  100% {
-    transform: translate3d(-22px, 28px, 80px) scale(0.96);
-  }
-}
-
-@keyframes shimmer-sweep {
-  0%, 35% {
-    transform: translateX(-120%);
-  }
-  70%, 100% {
-    transform: translateX(120%);
-  }
-}
-
 @keyframes marquee {
   from {
     transform: translateX(0);
   }
   to {
     transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 767px) {
+  .ripple-hero {
+    min-height: 88svh;
+  }
+
+  .ripple-hero__bg {
+    transform: none;
+  }
+
+  .ripple-hero__overlay {
+    background:
+      linear-gradient(to bottom, rgba(4, 10, 14, 0.24), rgba(4, 10, 14, 0.64)),
+      linear-gradient(to top, rgba(2, 7, 10, 0.74), rgba(2, 7, 10, 0.30));
   }
 }
 
