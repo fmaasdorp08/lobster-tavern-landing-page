@@ -1,4 +1,4 @@
-const whatsappNumber = "27721234567";
+const whatsappNumber = "27768100585";
 const whatsappMessage = encodeURIComponent(
   "Hi Lobster Tavern, I saw your campaign and would like to enquire about a booking or order."
 );
