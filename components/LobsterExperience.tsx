@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 
 const whatsappNumber = '27768100585';
-const whatsappMessage = encodeURIComponent('Hi Lobster Tavern, I would like to make a booking or place an order.');
+const whatsappMessage = encodeURIComponent('Hi Lobster Tavern, I would like to place an order.');
 
 const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 const uberEatsUrl = 'https://www.ubereats.com/store-browse-uuid/c279b576-d85b-5ae9-8525-6032c833b861?diningMode=DELIVERY';
@@ -12,24 +12,24 @@ const uberEatsUrl = 'https://www.ubereats.com/store-browse-uuid/c279b576-d85b-5a
 const marqueeItems = [
   'Flame Grilled Lobster',
   'Premium Seafood',
-  'Luxury Dining',
-  'Cocktails',
-  'Johannesburg Nights',
-  'Date Night Destination',
+  'Luxury Home Dining',
+  'Fine Dining Experienced At Home',
+  'Johannesburg Nights In',
+  'Date Night at Home',
 ];
 
 const cards = [
   {
-    title: 'Seafood Theatre',
-    desc: 'Premium plating, flame grilled finishes, and atmosphere-first dining.',
+    title: 'Oceans Floor Delight',
+    desc: 'A luxurious seafood feast featuring succulent prawns, mussels, calamari, squid heads, whole lobster, lobster tails, and full crab portions, served with signature sauces and fresh vegetable selections.',
   },
   {
-    title: 'Date Night Energy',
-    desc: 'Warm lighting, cocktails, music, and sophisticated evening ambience.',
+    title: 'Seafood Boil Crab Combo',
+    desc: 'A generous seafood platter featuring prawns, mussels, calamari, lobster tails, and full crab portions, served with sweetcorn, baby potatoes, and your choice of chipolata sausages or boiled eggs.',
   },
   {
-    title: 'Celebration Dining',
-    desc: 'Built for birthdays, evenings out, celebrations, and indulgent nights.',
+    title: 'Massive Deck',
+    desc: 'A generous seafood platter featuring prawns, mussels, calamari, squid heads, whole lobster, and lobster tails, served with sweetcorn, baby potatoes, and your choice of chipolata sausages or boiled eggs. Includes your choice of signature sauce: Lemon & Herb, Spicy Cajun, or Peri-Peri.',
   },
 ];
 
@@ -219,11 +219,11 @@ export default function LobsterExperience() {
             <span className="block text-gold">Designed For Nights In.</span>
           </h1>
           <p className="reveal mx-auto mt-8 max-w-3xl text-lg leading-8 text-smoke sm:text-xl">
-            Seafood boil bags, premium crab dishes, indulgent seafood platters with all that the ocean has to offer, premium seafood platters, enjoy that premium dining experience,crafted for unforgettable evenings.
+            Seafood boil bags, premium crab dishes, indulgent seafood platters with all that the ocean has to offer, premium seafood platters, enjoy that premium dining experience, crafted for unforgettable evenings.
           </p>
           <div className="reveal mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a href={whatsappUrl} onMouseMove={updateGlow} className="glow-cta rounded-full bg-gold px-8 py-4 text-sm font-black uppercase tracking-[0.25em] text-black">
-              Reserve On WhatsApp
+              Order On WhatsApp
             </a>
             <a href={uberEatsUrl} onMouseMove={updateGlow} className="glow-cta rounded-full border border-white/20 bg-white/5 px-8 py-4 text-sm font-black uppercase tracking-[0.25em] text-white backdrop-blur">
               Order On Uber Eats
@@ -257,8 +257,8 @@ export default function LobsterExperience() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(205,164,93,0.18),transparent_40%)]" />
         <div className="reveal relative z-10 mx-auto max-w-4xl pt-24">
           <p className="text-sm font-semibold uppercase tracking-[0.5em] text-gold">Lobster Tavern</p>
-          <h2 className="mt-6 font-display text-5xl leading-tight sm:text-6xl">Your Table Is Waiting.</h2>
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-smoke">Skip ordinary dining. Reserve your experience or order directly from Lobster Tavern tonight.</p>
+          <h2 className="mt-6 font-display text-5xl leading-tight sm:text-6xl">Your Order Is Waiting.</h2>
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-smoke">Skip ordinary dining. Reserve your experience and order directly from Lobster Tavern tonight.</p>
           <div className="mt-12 flex flex-col justify-center gap-4 sm:flex-row">
             <a href={whatsappUrl} onMouseMove={updateGlow} className="glow-cta rounded-full bg-gold px-8 py-4 text-sm font-black uppercase tracking-[0.25em] text-black">WhatsApp Booking</a>
             <a href={uberEatsUrl} onMouseMove={updateGlow} className="glow-cta rounded-full border border-white/20 px-8 py-4 text-sm font-black uppercase tracking-[0.25em] text-white">Uber Eats Delivery</a>
