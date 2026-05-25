@@ -48,8 +48,6 @@ const cards = [
 
 export default function LobsterExperience() {
   const rootRef = useRef<HTMLElement | null>(null);
-  const rippleLayerRef = useRef<HTMLDivElement | null>(null);
-  const lastRippleRef = useRef(0);
 
   useEffect(() => {
     const reveals = gsap.utils.toArray<HTMLElement>('.reveal');
@@ -75,24 +73,6 @@ export default function LobsterExperience() {
     target.style.setProperty('--y', `${event.clientY - rect.top}px`);
   };
 
-  const createHeroRipple = (event: ReactMouseEvent<HTMLElement>) => {
-    const now = performance.now();
-    if (now - lastRippleRef.current < 120) return;
-    lastRippleRef.current = now;
-
-    const layer = rippleLayerRef.current;
-    if (!layer) return;
-
-    const rect = event.currentTarget.getBoundingClientRect();
-    const ripple = document.createElement('span');
-    ripple.className = 'cursor-ripple';
-    ripple.style.left = `${event.clientX - rect.left}px`;
-    ripple.style.top = `${event.clientY - rect.top}px`;
-
-    layer.appendChild(ripple);
-    window.setTimeout(() => ripple.remove(), 1200);
-  };
-
   return (
     <main ref={rootRef} className="relative overflow-hidden bg-[#050505] text-white">
       <nav className="glass-nav fixed left-1/2 top-5 z-50 flex w-[calc(100%-2rem)] max-w-6xl -translate-x-1/2 items-center justify-between rounded-full px-5 py-3">
@@ -106,10 +86,9 @@ export default function LobsterExperience() {
         </div>
       </nav>
 
-      <section onMouseMove={createHeroRipple} className="motion-stage relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-24">
+      <section className="motion-stage relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-24">
         <img src={images.hero} alt="Lobster Tavern hero seafood dining" className="absolute inset-0 h-full w-full object-cover opacity-12" />
         <div className="absolute inset-0 bg-white/35" />
-        <div ref={rippleLayerRef} className="ripple-layer" aria-hidden="true" />
 
         <div className="relative z-10 mx-auto max-w-6xl text-center">
           <p className="reveal mb-6 text-sm font-semibold uppercase tracking-[0.55em] text-gold">Lobster Tavern Johannesburg</p>
