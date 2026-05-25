@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, type MouseEvent as ReactMouseEvent } from 'react';
 import gsap from 'gsap';
+import WaterRippleHero from '@/components/WaterRippleHero';
 
 const officialWebsiteUrl = 'https://www.lobstertavern.com';
 const whatsappNumber = '27768100585';
@@ -86,10 +87,7 @@ export default function LobsterExperience() {
         </div>
       </nav>
 
-      <section className="motion-stage relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-24">
-        <img src={images.hero} alt="Lobster Tavern hero seafood dining" className="absolute inset-0 h-full w-full object-cover opacity-12" />
-        <div className="absolute inset-0 bg-white/35" />
-
+      <WaterRippleHero backgroundImage={images.hero} className="motion-stage px-6 py-24">
         <div className="relative z-10 mx-auto max-w-6xl text-center">
           <p className="reveal mb-6 text-sm font-semibold uppercase tracking-[0.55em] text-gold">Lobster Tavern Johannesburg</p>
           <h1 className="reveal font-display text-6xl leading-[0.9] tracking-tight sm:text-7xl lg:text-8xl">
@@ -109,7 +107,7 @@ export default function LobsterExperience() {
           </div>
           <img src={images.uberAvailable} alt="Available on Uber Eats" className="reveal mx-auto mt-8 h-16 w-auto object-contain opacity-90 sm:h-20" />
         </div>
-      </section>
+      </WaterRippleHero>
 
       <section className="relative z-10 border-y border-white/10 bg-black/80 py-5 backdrop-blur-xl">
         <div className="overflow-hidden whitespace-nowrap">
