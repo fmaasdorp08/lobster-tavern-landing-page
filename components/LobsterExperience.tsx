@@ -245,7 +245,7 @@ export default function LobsterExperience() {
               Order On Uber Eats
             </a>
           </div>
-          <img src={images.uberAvailable} alt="Available on Uber Eats" className="reveal mx-auto mt-8 h-10 w-auto object-contain opacity-80" />
+          <img src={images.uberAvailable} alt="Available on Uber Eats" className="reveal mx-auto mt-8 h-16 w-auto object-contain opacity-90 sm:h-20" />
         </div>
       </section>
 
@@ -272,10 +272,10 @@ export default function LobsterExperience() {
       </section>
 
       <section id="delivery" className="relative z-10 overflow-hidden border-t border-white/10 px-6 py-28 text-center sm:px-10 lg:px-20">
-        <img src={images.experience} alt="Lobster Tavern seafood experience" className="absolute inset-x-8 top-8 h-64 w-[calc(100%-4rem)] rounded-[40px] object-cover opacity-30" />
-        <div className="cinematic-video-plane absolute inset-x-8 top-8 h-64 rounded-[40px] opacity-30" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(205,164,93,0.18),transparent_40%)]" />
-        <div className="reveal relative z-10 mx-auto max-w-4xl pt-24">
+        <div className="reveal relative z-10 mx-auto max-w-5xl">
+          <div className="mx-auto mb-14 overflow-hidden rounded-[40px] border border-white/10 bg-white/60 p-4 shadow-2xl shadow-black/10 backdrop-blur-xl">
+            <img src={images.experience} alt="Lobster Tavern seafood experience" className="h-44 w-full rounded-[30px] object-cover sm:h-56 lg:h-64" />
+          </div>
           <p className="text-sm font-semibold uppercase tracking-[0.5em] text-gold">Lobster Tavern</p>
           <h2 className="mt-6 font-display text-5xl leading-tight sm:text-6xl">Your Order Is Waiting.</h2>
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-smoke">Skip ordinary dining. Reserve your experience and order directly from Lobster Tavern tonight.</p>
@@ -283,7 +283,7 @@ export default function LobsterExperience() {
             <a href={whatsappUrl} onMouseMove={updateGlow} className="glow-cta rounded-full bg-gold px-8 py-4 text-sm font-black uppercase tracking-[0.25em] text-black">WhatsApp Order</a>
             <a href={uberEatsUrl} onMouseMove={updateGlow} className="glow-cta rounded-full border border-white/20 px-8 py-4 text-sm font-black uppercase tracking-[0.25em] text-white">Uber Eats Delivery</a>
           </div>
-          <img src={images.uberOrder} alt="Order with Uber Eats" className="mx-auto mt-8 h-10 w-auto object-contain opacity-80" />
+          <img src={images.uberOrder} alt="Order with Uber Eats" className="mx-auto mt-8 h-16 w-auto object-contain opacity-90 sm:h-20" />
         </div>
       </section>
     </main>
