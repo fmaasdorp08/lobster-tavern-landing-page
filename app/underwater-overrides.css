@@ -1,0 +1,129 @@
+/* Underwater refinement layer
+   Purpose: remove star-like WebGL dots, reduce scroll jank, and create a smoother aquatic motion backdrop. */
+
+/* Hide the old WebGL particle canvas that was reading as 'spots/stars'. */
+canvas[aria-hidden='true'] {
+  display: none !important;
+}
+
+/* Stop scroll-event parallax from creating a glitchy/jittery hero feel. */
+.parallax-slow {
+  transform: none !important;
+}
+
+.motion-stage {
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(25, 82, 96, 0.11), transparent 30%),
+    radial-gradient(circle at 85% 30%, rgba(0, 0, 0, 0.055), transparent 34%),
+    linear-gradient(135deg, #ffffff 0%, #eef6f5 42%, #fbfaf7 100%) !important;
+}
+
+/* Water surface caustics: soft, slow, flowing rather than dotted. */
+.motion-stage::before {
+  content: '';
+  position: absolute;
+  inset: -28%;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 18% 20%, transparent 0 34%, rgba(10, 54, 66, 0.12) 35%, transparent 43%),
+    radial-gradient(ellipse at 48% 42%, transparent 0 32%, rgba(10, 54, 66, 0.10) 33%, transparent 42%),
+    radial-gradient(ellipse at 78% 70%, transparent 0 30%, rgba(0, 0, 0, 0.075) 31%, transparent 41%),
+    radial-gradient(ellipse at 35% 78%, transparent 0 34%, rgba(10, 54, 66, 0.08) 35%, transparent 44%);
+  background-size: 620px 420px, 760px 520px, 680px 520px, 720px 460px;
+  filter: blur(11px);
+  opacity: 0.72;
+  mix-blend-mode: multiply;
+  animation: water-caustic-flow 16s ease-in-out infinite alternate;
+}
+
+/* Slow underwater light sweep. */
+.motion-stage::after {
+  content: '';
+  position: absolute;
+  inset: -12%;
+  z-index: 3;
+  pointer-events: none;
+  background:
+    linear-gradient(103deg, transparent 0%, rgba(255, 255, 255, 0.0) 30%, rgba(20, 72, 86, 0.08) 46%, transparent 62%),
+    linear-gradient(72deg, transparent 0%, rgba(0, 0, 0, 0.045) 45%, transparent 64%);
+  filter: blur(18px);
+  opacity: 0.78;
+  animation: underwater-light-sweep 12s ease-in-out infinite;
+}
+
+.luxury-aurora {
+  opacity: 0.88 !important;
+  filter: blur(0.6px) saturate(0.95);
+  background:
+    radial-gradient(circle at 18% 18%, rgba(12, 62, 76, 0.12), transparent 32%),
+    radial-gradient(circle at 82% 28%, rgba(12, 62, 76, 0.08), transparent 28%),
+    radial-gradient(circle at 48% 86%, rgba(0, 0, 0, 0.055), transparent 34%),
+    linear-gradient(135deg, rgba(255,255,255,0.9), rgba(238,246,245,0.9), rgba(255,255,255,0.92)) !important;
+  animation: underwater-drift-refined 20s ease-in-out infinite alternate !important;
+}
+
+.luxury-grid {
+  opacity: 0.26 !important;
+  filter: blur(0.4px);
+}
+
+.depth-orb {
+  opacity: 0.18 !important;
+  filter: blur(68px) !important;
+}
+
+.shimmer-sweep {
+  opacity: 0.55 !important;
+  filter: blur(10px);
+}
+
+/* Make the hero image calmer while scrolling. */
+.motion-stage > img[alt='Lobster Tavern hero seafood dining'] {
+  opacity: 0.10 !important;
+  transform: scale(1.04);
+  will-change: opacity;
+}
+
+.motion-stage > .absolute.inset-0.bg-white\/35 {
+  background: rgba(255,255,255,0.42) !important;
+}
+
+@keyframes water-caustic-flow {
+  0% {
+    transform: translate3d(-4%, -2%, 0) rotate(-5deg) scale(1.12);
+    background-position: 0 0, 120px 80px, -80px 40px, 40px -60px;
+  }
+  50% {
+    transform: translate3d(3%, 2%, 0) rotate(-1deg) scale(1.2);
+    background-position: 90px 120px, 20px 180px, 100px 140px, -80px 70px;
+  }
+  100% {
+    transform: translate3d(4%, -3%, 0) rotate(-7deg) scale(1.15);
+    background-position: 180px 40px, -120px 240px, 160px -80px, 120px 130px;
+  }
+}
+
+@keyframes underwater-light-sweep {
+  0%, 100% {
+    transform: translateX(-10%) skewX(-8deg);
+    opacity: 0.44;
+  }
+  50% {
+    transform: translateX(10%) skewX(7deg);
+    opacity: 0.82;
+  }
+}
+
+@keyframes underwater-drift-refined {
+  0% {
+    transform: translate3d(-1.5%, -1%, -120px) scale(1.12) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(1.5%, 1%, -100px) scale(1.16) rotate(0.8deg);
+  }
+  100% {
+    transform: translate3d(-1%, 2%, -110px) scale(1.14) rotate(-0.8deg);
+  }
+}
