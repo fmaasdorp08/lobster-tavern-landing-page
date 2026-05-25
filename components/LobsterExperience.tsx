@@ -31,7 +31,7 @@ const marqueeItems = [
 const cards = [
   {
     title: 'Oceans Floor Delight',
-    image: '/images/oceans-floor-delight.jpg',
+    image: '/images/ocenas-floor-delight.jpg',
     desc: 'A luxurious seafood feast featuring succulent prawns, mussels, calamari, squid heads, whole lobster, lobster tails, and full crab portions, served with signature sauces and fresh vegetable selections.',
   },
   {
