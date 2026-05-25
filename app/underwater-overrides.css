@@ -1,93 +1,152 @@
 /* Underwater refinement layer
-   Purpose: remove star-like WebGL dots, reduce scroll jank, and create a smoother aquatic motion backdrop. */
+   Purpose: remove star-like WebGL dots, create a global aquatic motion system, and keep the hero image visible beneath the water treatment. */
 
-/* Hide the old WebGL particle canvas that was reading as 'spots/stars'. */
 canvas[aria-hidden='true'] {
   display: none !important;
 }
 
-/* Stop scroll-event parallax from creating a glitchy/jittery hero feel. */
 .parallax-slow {
   transform: none !important;
+}
+
+main {
+  position: relative;
+  background:
+    radial-gradient(circle at 18% 8%, rgba(18, 78, 92, 0.08), transparent 28%),
+    radial-gradient(circle at 84% 22%, rgba(0, 0, 0, 0.045), transparent 32%),
+    linear-gradient(135deg, #ffffff 0%, #eef7f6 44%, #fbfaf7 100%) !important;
+}
+
+main::before,
+main::after {
+  content: '';
+  position: fixed;
+  inset: -25%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Global underwater caustics across the full page. */
+main::before {
+  background:
+    radial-gradient(ellipse at 18% 18%, transparent 0 31%, rgba(12, 72, 86, 0.13) 32%, transparent 43%),
+    radial-gradient(ellipse at 50% 42%, transparent 0 30%, rgba(0, 0, 0, 0.08) 31%, transparent 42%),
+    radial-gradient(ellipse at 82% 68%, transparent 0 28%, rgba(12, 72, 86, 0.11) 29%, transparent 40%),
+    radial-gradient(ellipse at 34% 82%, transparent 0 31%, rgba(0, 0, 0, 0.06) 32%, transparent 43%);
+  background-size: 640px 440px, 820px 560px, 720px 520px, 760px 480px;
+  filter: blur(9px);
+  opacity: 0.62;
+  mix-blend-mode: multiply;
+  animation: water-caustic-flow 17s ease-in-out infinite alternate;
+}
+
+/* Global slow water light sweep. */
+main::after {
+  background:
+    linear-gradient(103deg, transparent 0%, rgba(255,255,255,0) 30%, rgba(17, 82, 98, 0.08) 46%, transparent 63%),
+    linear-gradient(74deg, transparent 0%, rgba(0, 0, 0, 0.04) 44%, transparent 64%);
+  filter: blur(18px);
+  opacity: 0.66;
+  animation: underwater-light-sweep 13s ease-in-out infinite;
 }
 
 .motion-stage {
   isolation: isolate;
   background:
-    radial-gradient(circle at 20% 10%, rgba(25, 82, 96, 0.11), transparent 30%),
-    radial-gradient(circle at 85% 30%, rgba(0, 0, 0, 0.055), transparent 34%),
-    linear-gradient(135deg, #ffffff 0%, #eef6f5 42%, #fbfaf7 100%) !important;
+    linear-gradient(135deg, rgba(255,255,255,0.24), rgba(238,247,246,0.18), rgba(255,255,255,0.24)) !important;
 }
 
-/* Water surface caustics: soft, slow, flowing rather than dotted. */
-.motion-stage::before {
-  content: '';
-  position: absolute;
-  inset: -28%;
-  z-index: 2;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse at 18% 20%, transparent 0 34%, rgba(10, 54, 66, 0.12) 35%, transparent 43%),
-    radial-gradient(ellipse at 48% 42%, transparent 0 32%, rgba(10, 54, 66, 0.10) 33%, transparent 42%),
-    radial-gradient(ellipse at 78% 70%, transparent 0 30%, rgba(0, 0, 0, 0.075) 31%, transparent 41%),
-    radial-gradient(ellipse at 35% 78%, transparent 0 34%, rgba(10, 54, 66, 0.08) 35%, transparent 44%);
-  background-size: 620px 420px, 760px 520px, 680px 520px, 720px 460px;
-  filter: blur(11px);
-  opacity: 0.72;
-  mix-blend-mode: multiply;
-  animation: water-caustic-flow 16s ease-in-out infinite alternate;
-}
-
-/* Slow underwater light sweep. */
+.motion-stage::before,
 .motion-stage::after {
   content: '';
   position: absolute;
-  inset: -12%;
-  z-index: 3;
+  inset: -24%;
   pointer-events: none;
+  z-index: 4;
+}
+
+/* Hero-specific stronger water refraction over the image. */
+.motion-stage::before {
   background:
-    linear-gradient(103deg, transparent 0%, rgba(255, 255, 255, 0.0) 30%, rgba(20, 72, 86, 0.08) 46%, transparent 62%),
-    linear-gradient(72deg, transparent 0%, rgba(0, 0, 0, 0.045) 45%, transparent 64%);
-  filter: blur(18px);
+    radial-gradient(ellipse at 20% 18%, transparent 0 30%, rgba(255,255,255,0.18) 31%, transparent 43%),
+    radial-gradient(ellipse at 54% 46%, transparent 0 30%, rgba(8, 70, 86, 0.11) 31%, transparent 42%),
+    radial-gradient(ellipse at 78% 72%, transparent 0 29%, rgba(255,255,255,0.14) 30%, transparent 42%);
+  background-size: 540px 380px, 680px 460px, 620px 420px;
+  filter: blur(8px);
+  opacity: 0.86;
+  mix-blend-mode: screen;
+  animation: water-caustic-flow 14s ease-in-out infinite alternate;
+}
+
+.motion-stage::after {
+  background:
+    linear-gradient(106deg, transparent 0%, rgba(255,255,255,0.0) 28%, rgba(255,255,255,0.28) 45%, transparent 62%),
+    linear-gradient(72deg, transparent 0%, rgba(16, 78, 96, 0.10) 44%, transparent 65%);
+  filter: blur(14px);
   opacity: 0.78;
-  animation: underwater-light-sweep 12s ease-in-out infinite;
+  animation: underwater-light-sweep 11s ease-in-out infinite;
 }
 
 .luxury-aurora {
-  opacity: 0.88 !important;
-  filter: blur(0.6px) saturate(0.95);
+  opacity: 0.28 !important;
+  filter: blur(1.2px) saturate(0.9);
   background:
     radial-gradient(circle at 18% 18%, rgba(12, 62, 76, 0.12), transparent 32%),
     radial-gradient(circle at 82% 28%, rgba(12, 62, 76, 0.08), transparent 28%),
     radial-gradient(circle at 48% 86%, rgba(0, 0, 0, 0.055), transparent 34%),
-    linear-gradient(135deg, rgba(255,255,255,0.9), rgba(238,246,245,0.9), rgba(255,255,255,0.92)) !important;
-  animation: underwater-drift-refined 20s ease-in-out infinite alternate !important;
+    linear-gradient(135deg, rgba(255,255,255,0.35), rgba(238,246,245,0.32), rgba(255,255,255,0.35)) !important;
+  animation: underwater-drift-refined 22s ease-in-out infinite alternate !important;
 }
 
 .luxury-grid {
-  opacity: 0.26 !important;
+  opacity: 0.12 !important;
   filter: blur(0.4px);
 }
 
 .depth-orb {
-  opacity: 0.18 !important;
-  filter: blur(68px) !important;
+  opacity: 0.12 !important;
+  filter: blur(72px) !important;
 }
 
 .shimmer-sweep {
-  opacity: 0.55 !important;
+  opacity: 0.42 !important;
   filter: blur(10px);
 }
 
-/* Make the hero image calmer while scrolling. */
+/* Make the hero image a visible backdrop, not a ghost. */
 .motion-stage > img[alt='Lobster Tavern hero seafood dining'] {
-  opacity: 0.10 !important;
-  transform: scale(1.04);
+  opacity: 0.58 !important;
+  transform: scale(1.035);
+  object-position: center top;
+  z-index: 0 !important;
   will-change: opacity;
 }
 
 .motion-stage > .absolute.inset-0.bg-white\/35 {
-  background: rgba(255,255,255,0.42) !important;
+  background: rgba(255,255,255,0.18) !important;
+  z-index: 1 !important;
+}
+
+.motion-stage .relative.z-10 {
+  z-index: 10 !important;
+}
+
+.marquee-track,
+#experience,
+#delivery,
+.glass-nav {
+  position: relative;
+}
+
+#experience,
+#delivery {
+  background: transparent !important;
+}
+
+.cursor-light {
+  background: radial-gradient(circle, rgba(12, 50, 62, 0.12), rgba(0, 0, 0, 0.035) 34%, transparent 68%);
+  filter: blur(16px);
+  mix-blend-mode: multiply;
 }
 
 @keyframes water-caustic-flow {
@@ -108,11 +167,11 @@ canvas[aria-hidden='true'] {
 @keyframes underwater-light-sweep {
   0%, 100% {
     transform: translateX(-10%) skewX(-8deg);
-    opacity: 0.44;
+    opacity: 0.42;
   }
   50% {
     transform: translateX(10%) skewX(7deg);
-    opacity: 0.82;
+    opacity: 0.78;
   }
 }
 
