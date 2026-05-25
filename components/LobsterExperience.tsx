@@ -1,13 +1,23 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type MouseEvent as ReactMouseEvent } from 'react';
 import gsap from 'gsap';
 
+const officialWebsiteUrl = 'https://www.lobstertavern.com';
 const whatsappNumber = '27768100585';
 const whatsappMessage = encodeURIComponent('Hi Lobster Tavern, I would like to place an order.');
 
 const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 const uberEatsUrl = 'https://www.ubereats.com/store-browse-uuid/c279b576-d85b-5ae9-8525-6032c833b861?diningMode=DELIVERY';
+
+const images = {
+  logo: '/images/lobster-tavern-logo.png',
+  hero: '/images/hero-lobster-dining.jpg',
+  chefPlating: '/images/chef-plating.jpg',
+  experience: '/images/lobster-tavern-experience.png',
+  uberAvailable: '/images/available-on-uber-eats.svg',
+  uberOrder: '/images/order-with-uber-eats.svg',
+};
 
 const marqueeItems = [
   'Flame Grilled Lobster',
@@ -21,14 +31,17 @@ const marqueeItems = [
 const cards = [
   {
     title: 'Oceans Floor Delight',
+    image: '/images/oceans-floor-delight.jpg',
     desc: 'A luxurious seafood feast featuring succulent prawns, mussels, calamari, squid heads, whole lobster, lobster tails, and full crab portions, served with signature sauces and fresh vegetable selections.',
   },
   {
     title: 'Seafood Boil Crab Combo',
+    image: '/images/seafood-boil-bag-combo.jpg',
     desc: 'A generous seafood platter featuring prawns, mussels, calamari, lobster tails, and full crab portions, served with sweetcorn, baby potatoes, and your choice of chipolata sausages or boiled eggs.',
   },
   {
     title: 'Massive Deck',
+    image: '/images/massive-deck.jpg',
     desc: 'A generous seafood platter featuring prawns, mussels, calamari, squid heads, whole lobster, and lobster tails, served with sweetcorn, baby potatoes, and your choice of chipolata sausages or boiled eggs. Includes your choice of signature sauce: Lemon & Herb, Spicy Cajun, or Peri-Peri.',
   },
 ];
@@ -46,7 +59,6 @@ function WebGLParticles() {
     const vertexSource = `
       attribute vec2 a_position;
       uniform float u_time;
-      uniform vec2 u_resolution;
       void main() {
         vec2 p = a_position;
         float drift = sin(u_time * 0.7 + p.x * 6.0) * 0.025;
@@ -61,7 +73,7 @@ function WebGLParticles() {
         vec2 c = gl_PointCoord - 0.5;
         float d = length(c);
         float alpha = smoothstep(0.5, 0.0, d);
-        gl_FragColor = vec4(1.0, 0.72, 0.32, alpha * 0.42);
+        gl_FragColor = vec4(0.05, 0.05, 0.05, alpha * 0.32);
       }
     `;
 
@@ -165,7 +177,6 @@ export default function LobsterExperience() {
           scale: 1,
           duration: 1.1,
           ease: 'power3.out',
-          scrollTrigger: undefined,
         }
       );
     });
@@ -184,7 +195,7 @@ export default function LobsterExperience() {
     };
   }, []);
 
-  const updateGlow = (event: React.MouseEvent<HTMLAnchorElement>) => {
+  const updateGlow = (event: ReactMouseEvent<HTMLAnchorElement>) => {
     const target = event.currentTarget;
     const rect = target.getBoundingClientRect();
     target.style.setProperty('--x', `${event.clientX - rect.left}px`);
@@ -197,13 +208,10 @@ export default function LobsterExperience() {
       <div ref={cursorRef} className="cursor-light pointer-events-none fixed left-0 top-0 z-[2] hidden h-[440px] w-[440px] rounded-full lg:block" />
 
       <nav className="glass-nav fixed left-1/2 top-5 z-50 flex w-[calc(100%-2rem)] max-w-6xl -translate-x-1/2 items-center justify-between rounded-full px-5 py-3">
-        <a
-  href="https://www.lobstertavern.com"
-  className="text-xs font-bold uppercase tracking-[0.35em] text-gold transition hover:opacity-60"
-  aria-label="Visit the official Lobster Tavern website"
->
-  Lobster Tavern
-</a>
+        <a href={officialWebsiteUrl} className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.35em] text-gold transition hover:opacity-60" aria-label="Visit the official Lobster Tavern website">
+          <img src={images.logo} alt="Lobster Tavern logo" className="h-8 w-auto object-contain" />
+          <span className="hidden sm:inline">Lobster Tavern</span>
+        </a>
         <div className="hidden items-center gap-6 text-xs font-semibold uppercase tracking-[0.25em] text-white/70 sm:flex">
           <a href="#experience" className="hover:text-gold">Experience</a>
           <a href="#delivery" className="hover:text-gold">Order</a>
@@ -211,6 +219,8 @@ export default function LobsterExperience() {
       </nav>
 
       <section className="motion-stage relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-24">
+        <img src={images.hero} alt="Lobster Tavern hero seafood dining" className="absolute inset-0 h-full w-full object-cover opacity-20" />
+        <div className="absolute inset-0 bg-white/70" />
         <div className="luxury-aurora parallax-slow" />
         <div className="luxury-grid" />
         <div className="depth-orb one" />
@@ -235,6 +245,7 @@ export default function LobsterExperience() {
               Order On Uber Eats
             </a>
           </div>
+          <img src={images.uberAvailable} alt="Available on Uber Eats" className="reveal mx-auto mt-8 h-10 w-auto object-contain opacity-80" />
         </div>
       </section>
 
@@ -250,7 +261,9 @@ export default function LobsterExperience() {
         <div className="parallax-panel mx-auto grid max-w-6xl gap-10 lg:grid-cols-3">
           {cards.map((card) => (
             <div key={card.title} className="interactive-card reveal group rounded-[32px] border border-white/10 bg-white/[0.04] p-8 transition duration-500 hover:border-gold/40 hover:bg-white/[0.06]">
-              <div className="image-reveal mb-6 h-44 rounded-3xl" />
+              <div className="image-reveal mb-6 h-56 overflow-hidden rounded-3xl">
+                <img src={card.image} alt={card.title} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+              </div>
               <h3 className="font-display text-3xl text-white">{card.title}</h3>
               <p className="mt-4 leading-7 text-smoke">{card.desc}</p>
             </div>
@@ -259,6 +272,7 @@ export default function LobsterExperience() {
       </section>
 
       <section id="delivery" className="relative z-10 overflow-hidden border-t border-white/10 px-6 py-28 text-center sm:px-10 lg:px-20">
+        <img src={images.experience} alt="Lobster Tavern seafood experience" className="absolute inset-x-8 top-8 h-64 w-[calc(100%-4rem)] rounded-[40px] object-cover opacity-30" />
         <div className="cinematic-video-plane absolute inset-x-8 top-8 h-64 rounded-[40px] opacity-30" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(205,164,93,0.18),transparent_40%)]" />
         <div className="reveal relative z-10 mx-auto max-w-4xl pt-24">
@@ -266,9 +280,10 @@ export default function LobsterExperience() {
           <h2 className="mt-6 font-display text-5xl leading-tight sm:text-6xl">Your Order Is Waiting.</h2>
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-smoke">Skip ordinary dining. Reserve your experience and order directly from Lobster Tavern tonight.</p>
           <div className="mt-12 flex flex-col justify-center gap-4 sm:flex-row">
-            <a href={whatsappUrl} onMouseMove={updateGlow} className="glow-cta rounded-full bg-gold px-8 py-4 text-sm font-black uppercase tracking-[0.25em] text-black">WhatsApp Booking</a>
+            <a href={whatsappUrl} onMouseMove={updateGlow} className="glow-cta rounded-full bg-gold px-8 py-4 text-sm font-black uppercase tracking-[0.25em] text-black">WhatsApp Order</a>
             <a href={uberEatsUrl} onMouseMove={updateGlow} className="glow-cta rounded-full border border-white/20 px-8 py-4 text-sm font-black uppercase tracking-[0.25em] text-white">Uber Eats Delivery</a>
           </div>
+          <img src={images.uberOrder} alt="Order with Uber Eats" className="mx-auto mt-8 h-10 w-auto object-contain opacity-80" />
         </div>
       </section>
     </main>
