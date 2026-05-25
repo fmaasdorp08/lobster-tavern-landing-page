@@ -16,13 +16,13 @@ const marqueeItems = [
 export default function Page() {
   return (
     <main className="overflow-hidden bg-[#050505] text-white">
-      <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-24">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(205,164,93,0.28),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(255,140,66,0.18),transparent_25%),linear-gradient(135deg,#050505_0%,#111827_45%,#050505_100%)]" />
-
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute left-[10%] top-[15%] h-72 w-72 animate-pulse rounded-full bg-gold blur-3xl" />
-          <div className="absolute bottom-[10%] right-[10%] h-80 w-80 animate-pulse rounded-full bg-orange-500 blur-3xl" />
-        </div>
+      <section className="motion-stage relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-24">
+        <div className="luxury-aurora" />
+        <div className="luxury-grid" />
+        <div className="depth-orb one" />
+        <div className="depth-orb two" />
+        <div className="depth-orb three" />
+        <div className="shimmer-sweep opacity-40" />
 
         <div className="relative z-10 mx-auto max-w-6xl text-center">
           <p className="mb-6 text-sm font-semibold uppercase tracking-[0.55em] text-gold">
@@ -58,7 +58,7 @@ export default function Page() {
 
       <section className="border-y border-white/10 bg-black py-5">
         <div className="overflow-hidden whitespace-nowrap">
-          <div className="marquee-track inline-flex min-w-full animate-[marquee_22s_linear_infinite] gap-16 text-sm font-semibold uppercase tracking-[0.45em] text-gold">
+          <div className="marquee-track inline-flex min-w-full gap-16 text-sm font-semibold uppercase tracking-[0.45em] text-gold">
             {[...marqueeItems, ...marqueeItems].map((item, idx) => (
               <span key={idx}>{item}</span>
             ))}
@@ -84,7 +84,7 @@ export default function Page() {
           ].map((card) => (
             <div
               key={card.title}
-              className="group rounded-[32px] border border-white/10 bg-white/[0.04] p-8 transition duration-500 hover:-translate-y-2 hover:border-gold/40 hover:bg-white/[0.06]"
+              className="interactive-card group rounded-[32px] border border-white/10 bg-white/[0.04] p-8 transition duration-500 hover:border-gold/40 hover:bg-white/[0.06]"
             >
               <div className="mb-6 h-44 rounded-3xl bg-[radial-gradient(circle_at_center,rgba(205,164,93,0.28),transparent_55%),linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.02))] transition duration-500 group-hover:scale-[1.02]" />
               <h3 className="font-display text-3xl text-white">{card.title}</h3>
