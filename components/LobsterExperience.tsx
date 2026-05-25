@@ -197,7 +197,13 @@ export default function LobsterExperience() {
       <div ref={cursorRef} className="cursor-light pointer-events-none fixed left-0 top-0 z-[2] hidden h-[440px] w-[440px] rounded-full lg:block" />
 
       <nav className="glass-nav fixed left-1/2 top-5 z-50 flex w-[calc(100%-2rem)] max-w-6xl -translate-x-1/2 items-center justify-between rounded-full px-5 py-3">
-        <span className="text-xs font-bold uppercase tracking-[0.35em] text-gold">Lobster Tavern</span>
+        <a
+  href="https://www.lobstertavern.com"
+  className="text-xs font-bold uppercase tracking-[0.35em] text-gold transition hover:opacity-60"
+  aria-label="Visit the official Lobster Tavern website"
+>
+  Lobster Tavern
+</a>
         <div className="hidden items-center gap-6 text-xs font-semibold uppercase tracking-[0.25em] text-white/70 sm:flex">
           <a href="#experience" className="hover:text-gold">Experience</a>
           <a href="#delivery" className="hover:text-gold">Order</a>
