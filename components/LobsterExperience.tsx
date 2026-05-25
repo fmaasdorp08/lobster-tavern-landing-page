@@ -31,7 +31,7 @@ const marqueeItems = [
 const cards = [
   {
     title: 'Oceans Floor Delight',
-    image: '/images/ocenas-floor-delight.jpg',
+    image: '/images/oceans-floor-delight.jpg',
     desc: 'A luxurious seafood feast featuring succulent prawns, mussels, calamari, squid heads, whole lobster, lobster tails, and full crab portions, served with signature sauces and fresh vegetable selections.',
   },
   {
@@ -63,7 +63,7 @@ function WebGLParticles() {
         vec2 p = a_position;
         float drift = sin(u_time * 0.7 + p.x * 6.0) * 0.025;
         gl_Position = vec4(p.x + drift, p.y + cos(u_time * 0.45 + p.y * 5.0) * 0.025, 0.0, 1.0);
-        gl_PointSize = 1.8 + 2.8 * (sin(u_time + p.x * 8.0) * 0.5 + 0.5);
+        gl_PointSize = 2.4 + 3.8 * (sin(u_time + p.x * 8.0) * 0.5 + 0.5);
       }
     `;
 
@@ -73,7 +73,7 @@ function WebGLParticles() {
         vec2 c = gl_PointCoord - 0.5;
         float d = length(c);
         float alpha = smoothstep(0.5, 0.0, d);
-        gl_FragColor = vec4(0.05, 0.05, 0.05, alpha * 0.32);
+        gl_FragColor = vec4(0.02, 0.02, 0.02, alpha * 0.58);
       }
     `;
 
@@ -96,7 +96,7 @@ function WebGLParticles() {
     gl.linkProgram(program);
     gl.useProgram(program);
 
-    const particleCount = 180;
+    const particleCount = 220;
     const positions = new Float32Array(particleCount * 2);
     for (let i = 0; i < particleCount; i += 1) {
       positions[i * 2] = Math.random() * 2 - 1;
@@ -143,7 +143,7 @@ function WebGLParticles() {
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="pointer-events-none fixed inset-0 z-[1] opacity-70" aria-hidden="true" />;
+  return <canvas ref={canvasRef} className="pointer-events-none fixed inset-0 z-[3] opacity-100" aria-hidden="true" />;
 }
 
 export default function LobsterExperience() {
@@ -205,7 +205,7 @@ export default function LobsterExperience() {
   return (
     <main ref={rootRef} className="relative overflow-hidden bg-[#050505] text-white">
       <WebGLParticles />
-      <div ref={cursorRef} className="cursor-light pointer-events-none fixed left-0 top-0 z-[2] hidden h-[440px] w-[440px] rounded-full lg:block" />
+      <div ref={cursorRef} className="cursor-light pointer-events-none fixed left-0 top-0 z-[4] hidden h-[440px] w-[440px] rounded-full lg:block" />
 
       <nav className="glass-nav fixed left-1/2 top-5 z-50 flex w-[calc(100%-2rem)] max-w-6xl -translate-x-1/2 items-center justify-between rounded-full px-5 py-3">
         <a href={officialWebsiteUrl} className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.35em] text-gold transition hover:opacity-60" aria-label="Visit the official Lobster Tavern website">
@@ -219,14 +219,14 @@ export default function LobsterExperience() {
       </nav>
 
       <section className="motion-stage relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-24">
-        <img src={images.hero} alt="Lobster Tavern hero seafood dining" className="absolute inset-0 h-full w-full object-cover opacity-20" />
-        <div className="absolute inset-0 bg-white/70" />
-        <div className="luxury-aurora parallax-slow" />
-        <div className="luxury-grid" />
+        <img src={images.hero} alt="Lobster Tavern hero seafood dining" className="absolute inset-0 h-full w-full object-cover opacity-12" />
+        <div className="absolute inset-0 bg-white/35" />
+        <div className="luxury-aurora parallax-slow opacity-100" />
+        <div className="luxury-grid opacity-80" />
         <div className="depth-orb one" />
         <div className="depth-orb two" />
         <div className="depth-orb three" />
-        <div className="shimmer-sweep opacity-40" />
+        <div className="shimmer-sweep opacity-70" />
 
         <div className="relative z-10 mx-auto max-w-6xl text-center">
           <p className="reveal mb-6 text-sm font-semibold uppercase tracking-[0.55em] text-gold">Lobster Tavern Johannesburg</p>
