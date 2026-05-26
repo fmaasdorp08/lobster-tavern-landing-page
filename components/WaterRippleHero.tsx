@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect, useRef } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 
 type WaterRippleHeroProps = {
   backgroundImage: string;
@@ -13,43 +13,52 @@ export default function WaterRippleHero({
   children,
   className = "",
 }: WaterRippleHeroProps) {
-  const fxRef = useRef<HTMLDivElement | null>(null);
+  const heroRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    const el = fxRef.current;
+    const el = heroRef.current;
     if (!el) return;
 
     let raf = 0;
 
+    const updatePointer = (clientX: number, clientY: number) => {
+      const rect = el.getBoundingClientRect();
+      const x = ((clientX - rect.left) / rect.width) * 100;
+      const y = ((clientY - rect.top) / rect.height) * 100;
+
+      el.style.setProperty("--mx", `${x}%`);
+      el.style.setProperty("--my", `${y}%`);
+    };
+
     const handleMove = (event: MouseEvent) => {
       if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => updatePointer(event.clientX, event.clientY));
+    };
 
-      raf = requestAnimationFrame(() => {
-        const rect = el.getBoundingClientRect();
-        const x = ((event.clientX - rect.left) / rect.width) * 100;
-        const y = ((event.clientY - rect.top) / rect.height) * 100;
-        el.style.setProperty("--mx", `${x}%`);
-        el.style.setProperty("--my", `${y}%`);
-      });
+    const handleLeave = () => {
+      el.style.setProperty("--mx", "50%");
+      el.style.setProperty("--my", "50%");
     };
 
     window.addEventListener("mousemove", handleMove, { passive: true });
+    el.addEventListener("mouseleave", handleLeave);
 
     return () => {
       if (raf) cancelAnimationFrame(raf);
       window.removeEventListener("mousemove", handleMove);
+      el.removeEventListener("mouseleave", handleLeave);
     };
   }, []);
 
   return (
-    <section className={`ripple-hero ${className}`}>
+    <section ref={heroRef} className={`ripple-hero ${className}`}>
       <div
         className="ripple-hero__bg"
         style={{ backgroundImage: `url(${backgroundImage})` }}
         aria-hidden="true"
       />
+      <div className="ripple-hero__water" aria-hidden="true" />
       <div className="ripple-hero__caustics" aria-hidden="true" />
-      <div ref={fxRef} className="ripple-hero__fx" aria-hidden="true" />
       <div className="ripple-hero__overlay" aria-hidden="true" />
       <div className="ripple-hero__content">{children}</div>
     </section>
