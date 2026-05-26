@@ -13,17 +13,11 @@ export default function WaterRippleHero({
   children,
   className = "",
 }: WaterRippleHeroProps) {
-  const layerRef = useRef<HTMLDivElement | null>(null);
+  const fxRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const el = layerRef.current;
+    const el = fxRef.current;
     if (!el) return;
-
-    const disableEffect =
-      window.innerWidth < 768 ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (disableEffect) return;
 
     let raf = 0;
 
@@ -34,9 +28,8 @@ export default function WaterRippleHero({
         const rect = el.getBoundingClientRect();
         const x = ((event.clientX - rect.left) / rect.width) * 100;
         const y = ((event.clientY - rect.top) / rect.height) * 100;
-
-        el.style.setProperty("--pointer-x", `${x}%`);
-        el.style.setProperty("--pointer-y", `${y}%`);
+        el.style.setProperty("--mx", `${x}%`);
+        el.style.setProperty("--my", `${y}%`);
       });
     };
 
@@ -55,7 +48,8 @@ export default function WaterRippleHero({
         style={{ backgroundImage: `url(${backgroundImage})` }}
         aria-hidden="true"
       />
-      <div ref={layerRef} className="ripple-hero__fx" aria-hidden="true" />
+      <div className="ripple-hero__caustics" aria-hidden="true" />
+      <div ref={fxRef} className="ripple-hero__fx" aria-hidden="true" />
       <div className="ripple-hero__overlay" aria-hidden="true" />
       <div className="ripple-hero__content">{children}</div>
     </section>

@@ -2,20 +2,30 @@ canvas[aria-hidden="true"] {
   display: none !important;
 }
 
-.parallax-slow {
-  transform: none !important;
+.motion-stage::before,
+.motion-stage::after,
+.ripple-layer,
+.cursor-ripple,
+.cursor-ripple::before,
+.cursor-ripple::after,
+.cursor-light,
+.luxury-aurora,
+.luxury-grid,
+.depth-orb,
+.shimmer-sweep {
+  content: none !important;
+  display: none !important;
+  animation: none !important;
 }
 
-main {
-  position: relative;
-  background: linear-gradient(135deg, #ffffff 0%, #f8f7f3 48%, #ffffff 100%) !important;
+.parallax-slow {
+  transform: none !important;
 }
 
 main::before,
 main::after {
   content: none !important;
   display: none !important;
-  animation: none !important;
 }
 
 .motion-stage {

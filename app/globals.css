@@ -28,7 +28,7 @@ body {
   display: grid;
   place-items: center;
   overflow: hidden;
-  background: #07141a;
+  background: #08131a;
 }
 
 .ripple-hero__bg {
@@ -37,51 +37,67 @@ body {
   z-index: 0;
   background-size: cover;
   background-position: center center;
-  transform: scale(1.02);
+  transform: scale(1.04);
+  filter: saturate(0.92) contrast(1.02) brightness(0.72);
+}
+
+.ripple-hero__caustics {
+  position: absolute;
+  inset: -10%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.42;
+  mix-blend-mode: screen;
+  filter: blur(10px);
+  background:
+    radial-gradient(circle at 18% 24%, rgba(255,255,255,0.18) 0 2%, transparent 7%),
+    radial-gradient(circle at 72% 30%, rgba(255,255,255,0.14) 0 2.4%, transparent 8%),
+    radial-gradient(circle at 44% 62%, rgba(255,255,255,0.12) 0 2.2%, transparent 9%),
+    radial-gradient(circle at 82% 70%, rgba(255,255,255,0.10) 0 2%, transparent 8%);
+  background-size: 320px 320px, 420px 420px, 520px 520px, 620px 620px;
+  animation: caustic-drift 14s ease-in-out infinite alternate;
 }
 
 .ripple-hero__fx {
-  --pointer-x: 50%;
-  --pointer-y: 50%;
+  --mx: 50%;
+  --my: 50%;
   position: absolute;
-  inset: -2%;
-  z-index: 1;
+  inset: -6%;
+  z-index: 2;
   pointer-events: none;
+  opacity: 0.9;
+  mix-blend-mode: screen;
   background:
-    radial-gradient(circle at var(--pointer-x) var(--pointer-y),
-      rgba(255, 255, 255, 0.12) 0%,
-      rgba(255, 255, 255, 0.06) 10%,
-      rgba(255, 255, 255, 0.02) 18%,
+    radial-gradient(circle at var(--mx) var(--my),
+      rgba(255,255,255,0.22) 0%,
+      rgba(255,255,255,0.14) 7%,
+      rgba(255,255,255,0.08) 14%,
+      rgba(255,255,255,0.03) 22%,
       transparent 34%),
     linear-gradient(115deg,
-      rgba(255, 255, 255, 0.06) 0%,
-      transparent 24%,
-      rgba(255, 255, 255, 0.04) 46%,
+      transparent 0%,
+      rgba(255,255,255,0.08) 18%,
+      transparent 36%,
+      rgba(255,255,255,0.06) 52%,
       transparent 68%,
-      rgba(255, 255, 255, 0.05) 100%);
-  mix-blend-mode: screen;
-  opacity: 0.65;
-  filter: blur(14px);
-  transition:
-    opacity 280ms ease,
-    background-position 280ms ease,
-    transform 380ms ease;
-  animation: water-shimmer 12s ease-in-out infinite alternate;
+      rgba(255,255,255,0.08) 100%);
+  filter: blur(12px) saturate(1.1);
+  animation: ripple-shimmer 9s ease-in-out infinite alternate;
 }
 
 .ripple-hero__overlay {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 3;
   background:
-    linear-gradient(to bottom, rgba(4, 10, 14, 0.14), rgba(4, 10, 14, 0.46)),
-    linear-gradient(to top, rgba(2, 7, 10, 0.56), rgba(2, 7, 10, 0.12));
+    linear-gradient(to bottom, rgba(4, 10, 14, 0.10), rgba(4, 10, 14, 0.38)),
+    linear-gradient(to top, rgba(2, 7, 10, 0.62), rgba(2, 7, 10, 0.10));
   pointer-events: none;
 }
 
 .ripple-hero__content {
   position: relative;
-  z-index: 3;
+  z-index: 4;
   width: min(1120px, calc(100% - 2rem));
   margin-inline: auto;
   padding: 8rem 0 5rem;
@@ -97,7 +113,50 @@ body {
 .ripple-hero h1,
 .ripple-hero h1 span {
   color: #ffffff !important;
-  text-shadow: 0 18px 48px rgba(0, 0, 0, 0.48);
+  text-shadow: 0 18px 48px rgba(0, 0, 0, 0.44);
+}
+
+@keyframes caustic-drift {
+  0% {
+    transform: translate3d(-2%, -1%, 0) scale(1.02);
+  }
+  50% {
+    transform: translate3d(2%, 1.5%, 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(1%, -2%, 0) scale(1.04);
+  }
+}
+
+@keyframes ripple-shimmer {
+  0% {
+    transform: translate3d(-1.5%, -1%, 0) scale(1.02);
+  }
+  50% {
+    transform: translate3d(1.5%, 1%, 0) scale(1.05);
+  }
+  100% {
+    transform: translate3d(2%, -1.5%, 0) scale(1.03);
+  }
+}
+
+@media (max-width: 767px) {
+  .ripple-hero {
+    min-height: 88svh;
+  }
+
+  .ripple-hero__bg {
+    transform: none;
+  }
+
+  .ripple-hero__caustics {
+    opacity: 0.24;
+  }
+
+  .ripple-hero__fx {
+    opacity: 0.52;
+    filter: blur(16px);
+  }
 }
 
 @keyframes water-shimmer {
