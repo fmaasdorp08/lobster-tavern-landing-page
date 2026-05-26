@@ -21,9 +21,6 @@ declare global {
       strength: number
     ): JQuery;
     ripples(method: "destroy"): JQuery;
-    ripples(method: "pause"): JQuery;
-    ripples(method: "play"): JQuery;
-    ripples(method: "set", property: "dropRadius" | "perturbance", value: number): JQuery;
   }
 }
 
@@ -42,17 +39,18 @@ export default function WaterRippleHero({
 
   useEffect(() => {
     let ambientInterval: ReturnType<typeof setInterval> | null = null;
-    let cleanupEvents: (() => void) | null = null;
     let isMounted = true;
+    let removeClickListener: (() => void) | null = null;
 
     const initialiseRipples = async () => {
       const el = rippleRef.current;
       if (!el) return;
 
-      const isMobile =
-        window.innerWidth < 768 || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const disableEffect =
+        window.innerWidth < 768 ||
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      if (isMobile) return;
+      if (disableEffect) return;
 
       try {
         await import("jquery.ripples");
@@ -62,47 +60,40 @@ export default function WaterRippleHero({
         const $el = $(el);
 
         $el.ripples({
-          resolution: 512,
-          dropRadius: 24,
-          perturbance: 0.03,
+          resolution: 256,
+          dropRadius: 10,
+          perturbance: 0.006,
           interactive: false,
           crossOrigin: "",
         });
 
-        const addDrop = (x: number, y: number, radius = 22, strength = 0.03) => {
+        const addDrop = (
+          x: number,
+          y: number,
+          radius = 10,
+          strength = 0.008
+        ) => {
           try {
             $el.ripples("drop", x, y, radius, strength);
           } catch {}
-        };
-
-        const handleMouseMove = (event: MouseEvent) => {
-          const rect = el.getBoundingClientRect();
-          const x = event.clientX - rect.left;
-          const y = event.clientY - rect.top;
-          addDrop(x, y, 18, 0.025);
         };
 
         const handleClick = (event: MouseEvent) => {
           const rect = el.getBoundingClientRect();
           const x = event.clientX - rect.left;
           const y = event.clientY - rect.top;
-          addDrop(x, y, 36, 0.06);
+          addDrop(x, y, 14, 0.012);
         };
 
-        el.addEventListener("mousemove", handleMouseMove);
         el.addEventListener("click", handleClick);
-
-        cleanupEvents = () => {
-          el.removeEventListener("mousemove", handleMouseMove);
-          el.removeEventListener("click", handleClick);
-        };
+        removeClickListener = () => el.removeEventListener("click", handleClick);
 
         ambientInterval = setInterval(() => {
           const rect = el.getBoundingClientRect();
           const x = Math.random() * rect.width;
           const y = Math.random() * rect.height;
-          addDrop(x, y, 28, 0.02);
-        }, 2200);
+          addDrop(x, y, 10, 0.006);
+        }, 5000);
       } catch {
         return;
       }
@@ -112,8 +103,9 @@ export default function WaterRippleHero({
 
     return () => {
       isMounted = false;
-      cleanupEvents?.();
+      removeClickListener?.();
       if (ambientInterval) clearInterval(ambientInterval);
+
       try {
         if (rippleRef.current) {
           $(rippleRef.current).ripples("destroy");
