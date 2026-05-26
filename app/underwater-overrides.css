@@ -1,7 +1,7 @@
-/* Hero ripple layer
-   Purpose: emulate the referenced Webflow water-ripple feel without global scroll jank. */
+/* Hero atmosphere overrides
+   Softer, premium underwater mood without visible demo-style ripple rings. */
 
-canvas[aria-hidden='true'] {
+canvas[aria-hidden="true"] {
   display: none !important;
 }
 
@@ -34,53 +34,34 @@ main::after {
   animation: none !important;
 }
 
-.motion-stage > img[alt='Lobster Tavern hero seafood dining'] {
-  opacity: 0.72 !important;
-  transform: scale(1.035);
+.motion-stage > img[alt="Lobster Tavern hero seafood dining"] {
+  opacity: 0.78 !important;
+  transform: scale(1.02);
   object-position: center top;
   z-index: 0 !important;
   will-change: auto;
 }
 
 .motion-stage > .absolute.inset-0.bg-white\/35 {
-  background: rgba(255, 255, 255, 0.18) !important;
+  background: linear-gradient(
+    to bottom,
+    rgba(8, 18, 24, 0.16),
+    rgba(8, 18, 24, 0.34)
+  ) !important;
   z-index: 1 !important;
 }
 
-/* Water-ripple style layer over the hero image only. */
 .motion-stage::before,
 .motion-stage::after {
-  content: '' !important;
-  display: block !important;
-  position: absolute;
-  inset: -12%;
-  pointer-events: none;
-  z-index: 3;
+  content: none !important;
+  display: none !important;
 }
 
-.motion-stage::before {
-  background:
-    radial-gradient(circle at 20% 28%, transparent 0 8%, rgba(255, 255, 255, 0.22) 9%, transparent 11%, transparent 100%),
-    radial-gradient(circle at 76% 38%, transparent 0 10%, rgba(255, 255, 255, 0.18) 11%, transparent 14%, transparent 100%),
-    radial-gradient(circle at 50% 68%, transparent 0 12%, rgba(255, 255, 255, 0.14) 13%, transparent 17%, transparent 100%),
-    radial-gradient(circle at 36% 50%, transparent 0 18%, rgba(12, 48, 58, 0.10) 19%, transparent 22%, transparent 100%);
-  background-size: 480px 480px, 620px 620px, 740px 740px, 840px 840px;
-  background-position: 0 0, 120px 40px, -80px 160px, 60px -100px;
-  filter: blur(3px);
-  opacity: 0.9;
-  mix-blend-mode: screen;
-  animation: ripple-drift 11s ease-in-out infinite alternate;
-}
-
-.motion-stage::after {
-  background:
-    repeating-radial-gradient(circle at 50% 50%, transparent 0 26px, rgba(255, 255, 255, 0.16) 28px, transparent 32px),
-    linear-gradient(110deg, transparent 0%, rgba(255,255,255,0.16) 45%, transparent 61%);
-  background-size: 360px 360px, 100% 100%;
-  filter: blur(8px);
-  opacity: 0.56;
-  mix-blend-mode: soft-light;
-  animation: ripple-pulse 9s ease-in-out infinite;
+.ripple-layer,
+.cursor-ripple,
+.cursor-ripple::before,
+.cursor-ripple::after {
+  display: none !important;
 }
 
 .motion-stage .relative.z-10 {
@@ -100,90 +81,5 @@ main::after {
 }
 
 .cursor-light {
-  background: radial-gradient(circle, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.025) 34%, transparent 68%);
-  filter: blur(16px);
-  mix-blend-mode: multiply;
-}
-
-@keyframes ripple-drift {
-  0% {
-    transform: translate3d(-2%, -1%, 0) scale(1.02) rotate(0deg);
-    background-position: 0 0, 120px 40px, -80px 160px, 60px -100px;
-  }
-  50% {
-    transform: translate3d(1.5%, 1%, 0) scale(1.055) rotate(0.8deg);
-    background-position: 90px 120px, 20px 160px, 120px 60px, -70px 80px;
-  }
-  100% {
-    transform: translate3d(2%, -1.5%, 0) scale(1.035) rotate(-0.6deg);
-    background-position: 180px 60px, -90px 220px, 160px -80px, 120px 120px;
-  }
-}
-
-@keyframes ripple-pulse {
-  0%, 100% {
-    transform: scale(1) translateX(-1%);
-    opacity: 0.38;
-  }
-  50% {
-    transform: scale(1.08) translateX(1%);
-    opacity: 0.68;
-  }
-}.ripple-layer {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 4;
-}
-
-.cursor-ripple {
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  border-radius: 9999px;
-  border: 1px solid rgba(255,255,255,0.55);
-  background: radial-gradient(circle, rgba(255,255,255,0.18), transparent 70%);
-  transform: translate(-50%, -50%);
-  animation: hero-ripple 1.15s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  mix-blend-mode: screen;
-}
-
-.cursor-ripple::before {
-  content: '';
-  position: absolute;
-  inset: -12px;
-  border-radius: inherit;
-  border: 1px solid rgba(255,255,255,0.18);
-}
-
-.cursor-ripple::after {
-  content: '';
-  position: absolute;
-  inset: -24px;
-  border-radius: inherit;
-  border: 1px solid rgba(255,255,255,0.10);
-}
-
-.cursor-light {
   display: none !important;
-}
-
-@keyframes hero-ripple {
-  0% {
-    opacity: 0.65;
-    transform: translate(-50%, -50%) scale(0.4);
-    filter: blur(0px);
-  }
-
-  50% {
-    opacity: 0.42;
-    filter: blur(0.5px);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(8);
-    filter: blur(2px);
-  }
 }
