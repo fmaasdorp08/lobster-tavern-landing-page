@@ -1,5 +1,4 @@
 import './globals.css';
-import './underwater-overrides.css';
 import type { ReactNode } from 'react';
 
 export const metadata = {

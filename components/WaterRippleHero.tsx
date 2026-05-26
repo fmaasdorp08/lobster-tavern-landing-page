@@ -51,7 +51,7 @@ export default function WaterRippleHero({
   }, []);
 
   return (
-    <section ref={heroRef} className={`ripple-hero ${className}`}>
+    <section ref={heroRef} className={`ripple-hero ${className}`.trim()}>
       <div
         className="ripple-hero__bg"
         style={{ backgroundImage: `url(${backgroundImage})` }}

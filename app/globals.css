@@ -150,101 +150,6 @@ body {
   }
 }
 
-@media (max-width: 767px) {
-  .ripple-hero {
-    min-height: 88svh;
-  }
-
-  .ripple-hero__bg {
-    transform: none;
-  }
-
-  .ripple-hero__water {
-    opacity: 0.62;
-    filter: blur(16px);
-  }
-
-  .ripple-hero__caustics {
-    opacity: 0.22;
-  }
-
-  .ripple-hero__overlay {
-    background:
-      linear-gradient(to bottom, rgba(4, 10, 14, 0.24), rgba(4, 10, 14, 0.48)),
-      linear-gradient(to top, rgba(2, 7, 10, 0.74), rgba(2, 7, 10, 0.22));
-  }
-}
-
-@keyframes water-shimmer {
-  0% {
-    transform: translate3d(-1.5%, -1%, 0) scale(1.01);
-    opacity: 0.48;
-  }
-  50% {
-    transform: translate3d(1%, 1.25%, 0) scale(1.03);
-    opacity: 0.72;
-  }
-  100% {
-    transform: translate3d(1.5%, -1%, 0) scale(1.02);
-    opacity: 0.56;
-  }
-}
-
-@media (max-width: 767px) {
-  .ripple-hero {
-    min-height: 88svh;
-  }
-
-  .ripple-hero__bg {
-    transform: none;
-  }
-
-  .ripple-hero__fx {
-    opacity: 0.38;
-    filter: blur(18px);
-  }
-
-  .ripple-hero__overlay {
-    background:
-      linear-gradient(to bottom, rgba(4, 10, 14, 0.24), rgba(4, 10, 14, 0.58)),
-      linear-gradient(to top, rgba(2, 7, 10, 0.68), rgba(2, 7, 10, 0.24));
-  }
-}
-
-.motion-stage {
-  perspective: 1200px;
-  transform-style: preserve-3d;
-}
-
-.motion-stage::before,
-.motion-stage::after {
-  content: '';
-  position: absolute;
-  inset: -20%;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.motion-stage::before {
-  background:
-    repeating-radial-gradient(ellipse at 25% 15%, rgba(0, 0, 0, 0.095) 0 1px, transparent 1px 18px),
-    repeating-radial-gradient(ellipse at 70% 65%, rgba(0, 0, 0, 0.07) 0 1px, transparent 1px 24px);
-  filter: blur(7px);
-  opacity: 0.42;
-  mix-blend-mode: multiply;
-  animation: underwater-caustics 13s ease-in-out infinite alternate;
-  transform: rotate(-8deg) scale(1.18);
-}
-
-.motion-stage::after {
-  background:
-    linear-gradient(105deg, transparent 0%, rgba(0, 0, 0, 0.045) 42%, transparent 58%, transparent 100%),
-    linear-gradient(75deg, transparent 0%, rgba(24, 52, 64, 0.05) 46%, transparent 62%, transparent 100%);
-  opacity: 0.55;
-  filter: blur(10px);
-  animation: underwater-rays 10s ease-in-out infinite;
-}
-
 .marquee-track {
   animation: marquee 22s linear infinite;
 }
@@ -268,7 +173,11 @@ body {
 .glow-cta {
   position: relative;
   overflow: hidden;
-  transition: transform 240ms ease, box-shadow 240ms ease, background 240ms ease, color 240ms ease;
+  transition:
+    transform 240ms ease,
+    box-shadow 240ms ease,
+    background 240ms ease,
+    color 240ms ease;
   box-shadow: 0 18px 42px rgba(0, 0, 0, 0.12);
 }
 
@@ -276,7 +185,11 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.32), transparent 32%);
+  background: radial-gradient(
+    circle at var(--x, 50%) var(--y, 50%),
+    rgba(255, 255, 255, 0.32),
+    transparent 32%
+  );
   opacity: 0;
   transition: opacity 220ms ease;
 }
@@ -292,9 +205,11 @@ body {
 
 .image-reveal {
   background:
-    radial-gradient(circle at 30% 20%, rgba(0,0,0,0.16), transparent 28%),
-    linear-gradient(135deg, rgba(0,0,0,0.10), rgba(0,0,0,0.025));
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 20px 60px rgba(0,0,0,0.08);
+    radial-gradient(circle at 30% 20%, rgba(0, 0, 0, 0.16), transparent 28%),
+    linear-gradient(135deg, rgba(0, 0, 0, 0.10), rgba(0, 0, 0, 0.025));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 20px 60px rgba(0, 0, 0, 0.08);
 }
 
 .bg-\[\#050505\] {
@@ -344,32 +259,6 @@ body {
   border-color: rgba(0, 0, 0, 0.38) !important;
 }
 
-@keyframes underwater-caustics {
-  0% {
-    transform: translate3d(-3%, -2%, 0) rotate(-8deg) scale(1.18);
-    opacity: 0.30;
-  }
-  50% {
-    transform: translate3d(2%, 3%, 0) rotate(-4deg) scale(1.26);
-    opacity: 0.48;
-  }
-  100% {
-    transform: translate3d(3%, -1%, 0) rotate(-11deg) scale(1.2);
-    opacity: 0.36;
-  }
-}
-
-@keyframes underwater-rays {
-  0%, 100% {
-    transform: translateX(-8%) skewX(-8deg);
-    opacity: 0.38;
-  }
-  50% {
-    transform: translateX(8%) skewX(8deg);
-    opacity: 0.62;
-  }
-}
-
 @keyframes marquee {
   from {
     transform: translateX(0);
@@ -388,10 +277,19 @@ body {
     transform: none;
   }
 
+  .ripple-hero__water {
+    opacity: 0.62;
+    filter: blur(16px);
+  }
+
+  .ripple-hero__caustics {
+    opacity: 0.22;
+  }
+
   .ripple-hero__overlay {
     background:
-      linear-gradient(to bottom, rgba(4, 10, 14, 0.24), rgba(4, 10, 14, 0.64)),
-      linear-gradient(to top, rgba(2, 7, 10, 0.74), rgba(2, 7, 10, 0.30));
+      linear-gradient(to bottom, rgba(4, 10, 14, 0.24), rgba(4, 10, 14, 0.48)),
+      linear-gradient(to top, rgba(2, 7, 10, 0.74), rgba(2, 7, 10, 0.22));
   }
 }
 
@@ -402,5 +300,11 @@ body {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
+  }
+
+  .ripple-hero__water,
+  .ripple-hero__caustics,
+  .marquee-track {
+    animation: none !important;
   }
 }
