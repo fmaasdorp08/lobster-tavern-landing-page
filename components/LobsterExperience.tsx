@@ -113,13 +113,16 @@ export default function LobsterExperience() {
         </div>
       </nav>
 
-      <WaterRippleHero backgroundImage={images.hero} className="motion-stage px-6 py-24">
-        <div className="relative z-10 mx-auto max-w-6xl text-center">
+      <WaterRippleHero
+  backgroundImage={images.hero}
+  className="motion-stage"
+>
+        <div className="relative z-10 mx-auto flex w-full max-w-7xl items-end px-6 pb-24 sm:px-10 lg:px-20">
           <p className="reveal mb-6 text-sm font-semibold uppercase tracking-[0.55em] text-gold">
             Lobster Tavern Johannesburg
           </p>
 
-          <h1 className="reveal font-display text-6xl leading-[0.9] tracking-tight sm:text-7xl lg:text-8xl">
+          <h1 className="reveal font-display text-5xl leading-[0.9] tracking-tight sm:text-7xl lg:text-8xl">
             Luxury Seafood.
             <span className="block text-gold">Designed For Nights In.</span>
           </h1>
@@ -195,7 +198,7 @@ export default function LobsterExperience() {
 
       <section
         id="delivery"
-        className="relative z-10 overflow-hidden border-t border-white/10 px-6 py-28 text-center sm:px-10 lg:px-20"
+        className="relative z-10 overflow-hidden border-t border-white/10 px-6 py-28 max-w-3xl text-left sm:px-10 lg:px-20"
       >
         <div className="reveal relative z-10 mx-auto max-w-5xl">
           <div className="mx-auto mb-14 overflow-hidden rounded-[40px] border border-white/10 bg-white/60 p-4 shadow-2xl shadow-black/10 backdrop-blur-xl">
@@ -210,7 +213,7 @@ export default function LobsterExperience() {
             Lobster Tavern
           </p>
 
-          <h2 className="mt-6 font-display text-5xl leading-tight sm:text-6xl">
+          <h2 className="mt-6 font-display text-5xl leading-tight sm:text-5xl">
             Your Order Is Waiting.
           </h2>
 

@@ -307,4 +307,12 @@ body {
   .marquee-track {
     animation: none !important;
   }
+} canvas {
+  touch-action: none;
+}
+
+@media (max-width: 768px) {
+  canvas {
+    filter: saturate(0.9);
+  }
 }
